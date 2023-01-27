@@ -1,0 +1,19 @@
+export type AVAILABLE_NETWORKS = 1 | 137 | 43114 | 42161
+
+interface Networks {
+    [key: string]: AVAILABLE_NETWORKS
+}
+
+export const NETWORK: Networks = {
+    ETH: 1,
+    MATIC: 137,
+    AVA: 43114,
+    ARB: 42161
+};
+
+export const GOHM_NETWORK_ADDRESS = {
+    [NETWORK.ETH]: '0x0ab87046fBb341D058F17CBC4c1133F25a20a52f',
+    [NETWORK.MATIC]: '0xd8cA34fd379d9ca3C6Ee3b3905678320F5b45195',
+    [NETWORK.ARB]: '0x8d9ba570d6cb60c7e3e0f31343efe75ab8e65fb1',
+    [NETWORK.AVA]: '0x321E7092a180BB43555132ec53AaA65a5bF84251'
+};

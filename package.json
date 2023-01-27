@@ -1,0 +1,37 @@
+{
+  "name": "gohm-payment-sdk",
+  "description": "A payment SDK for gOHM in any EVM compatible network",
+  "version": "1.0.0",
+  "email": "petros@tripstrade.com",
+  "author": "LeaseLeabs",
+  "license": "MIT",
+  "private": "false",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Lease-Labs/gohm-sdk"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "scripts": {
+    "test": "node_modules/.bin/jest -i --coverage",
+    "eslint:fix": "eslint --fix"
+  },
+  "dependencies": {
+    "ethers": "^5.7.2"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.4.0",
+    "@typescript-eslint/eslint-plugin": "^5.49.0",
+    "@typescript-eslint/parser": "^5.49.0",
+    "dotenv": "^16.0.3",
+    "eslint": "^8.32.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "jest": "^29.4.1",
+    "nodemon": "^2.0.20",
+    "ts-jest": "^29.0.5",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.4"
+  }
+}
