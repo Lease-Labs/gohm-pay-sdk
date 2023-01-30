@@ -36,6 +36,9 @@ class GohmPayment {
      */
     async pay(amount: number | string, setAllowance = true): Promise<any> {
         const { callMethodName } = this.config;
+        await this.validateMethod().catch(error => { throw error });
+        console.log('test passed')
+        return
 
         const paymentAmount = ethers.utils.formatUnits(amount, GOHM_DECIMALS);
         const canSpendAmount = await this.hasAllowanceToSpend(Number(amount));
@@ -49,7 +52,7 @@ class GohmPayment {
             ).wait();
         }
 
-        return this.contractToCall[callMethodName](paymentAmount);
+        return this.contractToCall[this.config.callMethodName].arguments;
     }
 
     /**
@@ -77,6 +80,29 @@ class GohmPayment {
         const allowance: BigNumber = await this.gohmCurrency.allowance(signer.getAddress(), callContractAddress);
         const formattedAllowance = Number(ethers.utils.formatUnits(`${allowance}`, GOHM_DECIMALS));
         return formattedAllowance > amount;
+    }
+
+    async validateMethod (): Promise<boolean> {
+        const abiPayableFuncs = JSON.parse(this.config.abi).filter(item => item.stateMutability == 'payable' && item.type == 'function');
+        const contractContainsMethodName = Object.keys(this.contractToCall.functions).find(key => key === this.config.callMethodName);
+        if (!contractContainsMethodName) {
+            throw new Error('Contract does not contain this method name.');
+        }
+        const funcNames = abiPayableFuncs.map(item => item.name);
+        if (!funcNames.includes(this.config.callMethodName)) {
+            throw new Error('Abi does not contain this method name or it is not payable.');
+        }
+        return true;
+    }
+
+    async returnMethodArgs (): Promise<any> {
+        const contractFun = JSON.parse(this.config.abi).find(item => item.name == this.config.callMethodName);
+        return contractFun.inputs.map(inp => {
+            return {
+                name: inp.name,
+                type: inp.type
+            }
+        });
     }
 }
 
