@@ -8,7 +8,7 @@ A library which makes payments with gOhm easy.
 
 ## Installation and Usage
 
-Install the library with `npm install validator`
+Install the library with `npm install gohm-sdk`
 
 #### ES6
 
