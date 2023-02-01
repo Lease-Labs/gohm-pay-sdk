@@ -3,6 +3,7 @@
   "description": "A payment SDK for gOHM in any EVM compatible network",
   "version": "1.0.0",
   "email": "petros@tripstrade.com",
+  "main": "src/index.ts",
   "author": "LeaseLeabs",
   "license": "MIT",
   "private": "false",
@@ -14,7 +15,7 @@
     "node": ">=16.0.0"
   },
   "scripts": {
-    "test": "node_modules/.bin/jest -i --coverage",
+    "test": "node_modules/.bin/jest -i",
     "eslint:fix": "eslint --fix"
   },
   "dependencies": {

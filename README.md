@@ -35,7 +35,7 @@ Function                               | Description
 Tests are using jest, to run the tests use:
 
 ```sh
-$ npm test --coverage
+$ npm test
 ```
 
 ## License (MIT)
