@@ -37,8 +37,6 @@ class GohmPayment {
     async pay(amount: number | string, setAllowance = true): Promise<any> {
         const { callMethodName } = this.config;
         await this.validateMethod().catch(error => { throw error });
-        console.log('test passed')
-        return
 
         const paymentAmount = ethers.utils.formatUnits(amount, GOHM_DECIMALS);
         const canSpendAmount = await this.hasAllowanceToSpend(Number(amount));
@@ -52,7 +50,7 @@ class GohmPayment {
             ).wait();
         }
 
-        return this.contractToCall[this.config.callMethodName].arguments;
+        return this.contractToCall[callMethodName].arguments(paymentAmount);
     }
 
     /**

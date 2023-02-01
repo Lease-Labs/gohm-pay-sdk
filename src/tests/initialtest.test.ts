@@ -16,6 +16,10 @@ const payment = new GohmPayment(
     })
 describe('Initial unit tests', () => {
     test('Should return true if method name is validated', async () => {
+        const hasAllowance = await payment.hasAllowanceToSpend(10);
+        expect(hasAllowance).toReturn();
+    }),
+    test('Should return true if method name is validated', async () => {
         const validated = await payment.validateMethod();
         expect(validated).toBe(true);
     }),

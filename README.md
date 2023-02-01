@@ -8,15 +8,15 @@ A library which makes payments with gOhm easy.
 
 ## Installation and Usage
 
-Install the library with `npm install gohm-sdk`
+Install the library with `npm install gohm-payment-sdk`
 
 #### ES6
 
 ```javascript
-import gohm from 'gohm-sdk';
+import GohmPayment from 'gohm-payment-sdk';
 ```
 
-## GohmPayment class Usage
+## GohmPayment Usage
 
 Here is a list of the functions currently available.
 
