@@ -12,9 +12,9 @@ import '@openzeppelin/hardhat-upgrades';
 dotenv.config();
 
 declare global {
+    // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace NodeJS {
     interface ProcessEnv {
-      MATIC_URL: string;
       PRIVATE_KEY: string;
       POLYSCAN_API_KEY: string;
       MUMBAI_URL: string;
