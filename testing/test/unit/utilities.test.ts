@@ -32,5 +32,15 @@ describe('Utility methods', () => {
         it('Formats with a BigNumber', () => {
             expect(GohmPayment.formatToNumber(BigNumber.from(`${2 * 10 ** 18}`))).to.eq(2);
         });
+        it('Throws when number is less than 0', () => {
+            expect(function (){
+                GohmPayment.formatToNumber(-123);
+            }).to.throw('Gwei can not be less than 0 or not a number');
+        });
+        it('Throws when string is not a number', () => {
+            expect(function (){
+                GohmPayment.formatToNumber('adsas');
+            }).to.throw('Gwei can not be less than 0 or not a number');
+        });
     });
 });

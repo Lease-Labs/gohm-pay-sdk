@@ -101,8 +101,8 @@ class GohmPayment {
      * @param gwei Amount of gOHM in gwei
      */
     static formatToNumber(gwei: bigint | number | string | BigNumber): number {
-        if (gwei <= 0) {
-            throw Error('Gwei can not be less than 0');
+        if (gwei <= 0 || isNaN(Number(gwei))) {
+            throw Error('Gwei can not be less than 0 or not a number');
         }
         return Number(ethers.utils.formatUnits(`${gwei}`, GOHM_DECIMALS));
     }
