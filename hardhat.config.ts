@@ -52,8 +52,8 @@ const config: HardhatUserConfig = {
         target: 'ethers-v5',
     },
     paths: {
-        sources: 'testing/contracts',
-        tests: 'testing/test'
+        sources: './testing/contracts',
+        tests: './testing/test'
     }
 };
 

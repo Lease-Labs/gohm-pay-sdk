@@ -1,7 +1,7 @@
-import GohmPayment from '../../../lib';
+import GohmPayment from '../../../src/lib';
 import { ethers } from 'ethers';
 import Marketplace from '../abi/ContractAbi.json';
-import { NETWORK } from '../../../constants';
+import { NETWORK } from '../../../src/constants';
 
 const wallet: ethers.Wallet = ethers.Wallet.createRandom();
 const connection = new ethers.providers.JsonRpcBatchProvider('https://polygon-mumbai.g.alchemy.com/v2/Ici0r6bnKxal-kVQFeuHxOhGukpWH8f_');
