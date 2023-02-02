@@ -90,7 +90,7 @@ class GohmPayment {
      */
     static formatToGwei(amount: number | string): BigNumber {
         if (Number(amount) <= 0 || isNaN(Number(amount))) {
-            throw Error('Cannot format numbers less than 0');
+            throw Error('Cannot format numbers less than 0 or not numbers');
         }
         return ethers.utils.parseUnits(`${amount}`, GOHM_DECIMALS);
     }

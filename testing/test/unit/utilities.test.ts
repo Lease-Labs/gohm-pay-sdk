@@ -10,6 +10,16 @@ describe('Utility methods', () => {
         it('Formats with a string', () => {
             expect(GohmPayment.formatToGwei('1')).to.eq(BigNumber.from(`${10 ** 18}`));
         });
+        it('Throws when number is less than 0', () => {
+            expect(function (){
+                GohmPayment.formatToGwei(-123);
+            }).to.throw('Cannot format numbers less than 0 or not numbers');
+        });
+        it('Throws when string is not a number', () => {
+            expect(function (){
+                GohmPayment.formatToGwei('adsas');
+            }).to.throw('Cannot format numbers less than 0 or not numbers');
+        });
     });
 
     describe('formatToNumber', () => {
