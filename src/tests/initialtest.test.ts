@@ -13,7 +13,9 @@ const payment = new GohmPayment(
         callMethodName: 'requestListing',
         signer: signer,
         network: NETWORK.MATIC,
-    })
+    }
+);
+
 describe('Initial unit tests', () => {
     test('Should return true if method name is validated', async () => {
         const hasAllowance = await payment.hasAllowanceToSpend(10);
