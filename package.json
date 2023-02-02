@@ -15,7 +15,9 @@
     "node": ">=16.0.0"
   },
   "scripts": {
-    "test": "node_modules/.bin/jest -i",
+    "build": "tsc --outDir dist src/index.ts",
+    "pack": "npm pack",
+    "publish": "npm publish",
     "eslint:fix": "eslint --fix",
     "build:contracts": "npx hardhat compile"
   },
