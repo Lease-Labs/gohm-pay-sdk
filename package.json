@@ -17,6 +17,7 @@
   "scripts": {
     "build": "tsc --outDir dist src/index.ts",
     "test": "npx hardhat test",
+    "test:j": "node_modules/.bin/jest -i",
     "build:contracts": "npx hardhat compile"
   },
   "dependencies": {
