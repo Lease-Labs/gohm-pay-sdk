@@ -1,8 +1,6 @@
-import GohmPayment from '../../../src';
-import { BigNumber } from 'ethers';
 import { expect } from 'chai';
-import { ethers } from 'hardhat';
 import { numToEth } from '../helpers/test-helpers';
+import { ethers } from 'hardhat';
 
 describe('Utility methods', () => {
     let payContract;
@@ -20,11 +18,11 @@ describe('Utility methods', () => {
         await gohmToken.deployed();
         await gohmToken.mint(caller.address, numToEth(100));
 
-        const PayContract = await ethers.getContractFactory('Payable');
-        payContract = await PayContract.deploy();
-        await payContract.deployed();
+        // const PayContract = await ethers.getContractFactory('Payable');
+        // payContract = await PayContract.deploy();
+        // await payContract.deployed();
     });
     describe('pay', () => {
-        expect(true).to.equal(true)
+        expect(true).to.equal(false);
     });
 });

@@ -19,4 +19,4 @@ const depositWithParams = async (
 export {
     deposit,
     depositWithParams
-}
+};
