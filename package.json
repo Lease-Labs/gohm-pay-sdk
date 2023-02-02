@@ -16,9 +16,7 @@
   },
   "scripts": {
     "build": "tsc --outDir dist src/index.ts",
-    "pack": "npm pack",
-    "publish": "npm publish",
-    "eslint:fix": "eslint --fix",
+    "test": "npx hardhat test",
     "build:contracts": "npx hardhat compile"
   },
   "dependencies": {
