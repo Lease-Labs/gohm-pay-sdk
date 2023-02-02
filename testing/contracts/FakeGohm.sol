@@ -5,10 +5,10 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract FakeToken is ERC20, ERC20Burnable, Ownable {
+contract FakeGohm is ERC20, ERC20Burnable, Ownable {
     uint256 tokenAmountMantissa = 1 ether;
 
-    constructor(uint256 initialSupply) ERC20("Fake", "FAKE") {
+    constructor(uint256 initialSupply) ERC20("gOHM", "GOHM") {
         _mint(msg.sender, initialSupply * tokenAmountMantissa);
     }
 
