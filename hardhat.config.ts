@@ -51,6 +51,10 @@ const config: HardhatUserConfig = {
     typechain: {
         target: 'ethers-v5',
     },
+    paths: {
+        sources: 'testing/contracts',
+        tests: 'testing/test'
+    }
 };
 
 export default config;
