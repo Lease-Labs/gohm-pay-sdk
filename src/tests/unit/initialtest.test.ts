@@ -1,6 +1,6 @@
 import GohmPayment from '../../lib';
 import { ethers } from 'ethers';
-import Marketplace from '../abi/Marketplace.json';
+import Marketplace from '../abi/ContractAbi.json';
 import { NETWORK } from '../../constants';
 
 const wallet: ethers.Wallet = ethers.Wallet.createRandom();
