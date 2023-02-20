@@ -78,8 +78,8 @@ class GohmPayment {
      */
     async hasAllowanceToSpend(amount: number): Promise<boolean> {
         const { callContractAddress, signer } = this.config;
-
-        const allowance: BigNumber = await this.gohmCurrency.allowance(signer.getAddress(), callContractAddress);
+        const signerAddress = await signer.getAddress();
+        const allowance: BigNumber = await this.gohmCurrency.allowance(signerAddress, callContractAddress);
         const formattedAllowance = GohmPayment.formatToNumber(allowance);
         return formattedAllowance > amount;
     }
