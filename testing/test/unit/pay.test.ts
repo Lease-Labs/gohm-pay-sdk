@@ -25,7 +25,7 @@ describe('Pay', () => {
         await payContract.deployed();
         const blockNumBefore = await ethers.provider.getBlockNumber();
         const blockBefore = await ethers.provider.getBlock(blockNumBefore);
-        await approveTokenSpend(gohmToken, caller, payContract.address, numToEth(100));
+        await approveTokenSpend(gohmToken, caller, payContract.address, numToEth(101));
         config = {
             abi: JSON.stringify(Payable.abi),
             callContractAddress: payContract.address,
@@ -34,6 +34,7 @@ describe('Pay', () => {
             signer: caller
         };
         gohmPayment = new GohmPayment(config);
+        gohmPayment.gohmCurrency = gohmToken;
     });
     describe('Succeeds', async () => {
         it('To fetch the method arguments', async () => {
@@ -45,9 +46,16 @@ describe('Pay', () => {
             ]
             );
         });
-    });
-    it('To validate the method', async () => {
-        const methodValidation = gohmPayment.validateMethod();
-        expect(methodValidation).to.be.true;
+        it('To validate the method', async () => {
+            const methodValidation = gohmPayment.validateMethod();
+            expect(methodValidation).to.be.true;
+        });
+        it('To check if user has enough allowance to spend', async () => {
+            expect(await gohmPayment.hasAllowanceToSpend(99)).to.be.true;
+            expect(await gohmPayment.hasAllowanceToSpend(101)).to.be.false;
+        });
+        it('To complete the payment', async () => {
+            await gohmPayment.pay(100, false);
+        });
     });
 });
