@@ -25,7 +25,6 @@ describe('Pay', () => {
         await payContract.deployed();
         const blockNumBefore = await ethers.provider.getBlockNumber();
         const blockBefore = await ethers.provider.getBlock(blockNumBefore);
-        await approveTokenSpend(gohmToken, caller, payContract.address, numToEth(101));
         config = {
             abi: JSON.stringify(Payable),
             callContractAddress: payContract.address,
@@ -52,11 +51,12 @@ describe('Pay', () => {
             expect(methodValidation).to.be.true;
         });
         it('To check if user has enough allowance to spend', async () => {
+            await approveTokenSpend(gohmToken, caller, payContract.address, numToEth(101));
             expect(await gohmPayment.hasAllowanceToSpend(99)).to.be.true;
             expect(await gohmPayment.hasAllowanceToSpend(101)).to.be.false;
         });
         it('To complete the payment', async () => {
-            await gohmPayment.pay(99, false);
+            await gohmPayment.pay(100, true);
         });
     });
 });
