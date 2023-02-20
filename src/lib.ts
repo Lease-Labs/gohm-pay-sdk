@@ -31,8 +31,8 @@ class GohmPayment {
     }
 
     /**
-     * Calls the contract method set with the amount to spend in Gohm
-     * @param amount The amount to pay as a string or number. (not gwei)
+     * Calls the contract method set with the amount to allow in gOHM
+     * @param amount The amount to allow as a string or number. (not gwei)
      * @param setAllowance If true then it will call to set the allowance
      */
     async pay(amount: number | string, setAllowance = true): Promise<any> {
@@ -42,7 +42,6 @@ class GohmPayment {
             throw new Error('The method set is not a valid contract method or is not payable');
         }
 
-        const paymentAmount = GohmPayment.formatToGwei(amount);
         const canSpendAmount = await this.hasAllowanceToSpend(Number(amount));
 
         if (!canSpendAmount && !setAllowance) {
