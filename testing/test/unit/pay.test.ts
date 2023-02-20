@@ -32,7 +32,7 @@ describe('Pay', () => {
             callMethodName: 'depositWithParams',
             network: NETWORK['MATIC'],
             signer: caller,
-            args: [5, gohmToken, 100]
+            args: [5, gohmToken.address, 100]
         };
         gohmPayment = new GohmPayment(config);
         gohmPayment.gohmCurrency = gohmToken;
