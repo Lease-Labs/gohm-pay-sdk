@@ -55,7 +55,7 @@ class GohmPayment {
             ).wait();
         }
 
-        return this.contractToCall['depositWithParams'](...this.config.args);
+        return this.contractToCall[callMethodName](...this.config.args);
     }
 
     /**
