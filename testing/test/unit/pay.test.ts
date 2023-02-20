@@ -27,11 +27,12 @@ describe('Pay', () => {
         const blockBefore = await ethers.provider.getBlock(blockNumBefore);
         await approveTokenSpend(gohmToken, caller, payContract.address, numToEth(101));
         config = {
-            abi: JSON.stringify(Payable.abi),
+            abi: JSON.stringify(Payable),
             callContractAddress: payContract.address,
             callMethodName: 'depositWithParams',
             network: NETWORK['MATIC'],
-            signer: caller
+            signer: caller,
+            args: [5, gohmToken, 100]
         };
         gohmPayment = new GohmPayment(config);
         gohmPayment.gohmCurrency = gohmToken;
@@ -55,7 +56,7 @@ describe('Pay', () => {
             expect(await gohmPayment.hasAllowanceToSpend(101)).to.be.false;
         });
         it('To complete the payment', async () => {
-            await gohmPayment.pay(100, false);
+            await gohmPayment.pay(99, false);
         });
     });
 });

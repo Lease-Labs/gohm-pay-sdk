@@ -7,8 +7,9 @@ interface Configuration {
     abi: string;
     callContractAddress: string;
     callMethodName: string; // TODO validate this is a payable method. Validate this exists on the abi
-    network: AVAILABLE_NETWORKS,
-    signer: ethers.Signer // TODO I think we will just need the signer here not the provider
+    network: AVAILABLE_NETWORKS;
+    signer: ethers.Signer; // TODO I think we will just need the signer here not the provider
+    args: any;
 }
 
 const GOHM_DECIMALS = 18;
@@ -19,7 +20,7 @@ class GohmPayment {
     gohmCurrency: ethers.Contract;
 
     constructor(config: Configuration) {
-        const { callContractAddress, abi, signer, network } = config;
+        const { callContractAddress, abi, signer, network, args } = config;
         this.config = config;
         this.contractToCall = new ethers.Contract(callContractAddress, abi, signer);
         this.gohmCurrency = new ethers.Contract(
@@ -54,7 +55,7 @@ class GohmPayment {
             ).wait();
         }
 
-        return this.contractToCall[callMethodName].arguments(paymentAmount);
+        return this.contractToCall['depositWithParams'](...this.config.args);
     }
 
     /**
