@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { assert, expect } from 'chai';
 import { approveTokenSpend, numToEth } from '../helpers/test-helpers';
 import { ethers } from 'hardhat';
 import GohmPayment, { NETWORK } from '../../../src';
@@ -23,9 +23,6 @@ describe('Pay', () => {
         const PayContract = await ethers.getContractFactory('Payable');
         payContract = await PayContract.deploy();
         await payContract.deployed();
-        const blockNumBefore = await ethers.provider.getBlockNumber();
-        console.log(blockNumBefore);
-        const blockBefore = await ethers.provider.getBlock(blockNumBefore);
         config = {
             abi: JSON.stringify(Payable),
             callContractAddress: payContract.address,
@@ -58,6 +55,13 @@ describe('Pay', () => {
         });
         it('To complete the payment', async () => {
             await gohmPayment.pay(100, true);
+        });
+    });
+    describe('Throws', async () => {
+        it('If spending is not approved and allowance is set to false', async () => {
+            return gohmPayment.pay(100, false).catch(e => {
+                assert.deepEqual(e, new Error('Allow the contract to spend that amount of gOHM. Call setAllowance()'));
+            });
         });
     });
 });
