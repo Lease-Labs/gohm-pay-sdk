@@ -63,5 +63,31 @@ describe('Pay', () => {
                 assert.deepEqual(e, new Error('Allow the contract to spend that amount of gOHM. Call setAllowance()'));
             });
         });
+        it('If method is not valid', async () => {
+            gohmPayment.config = {
+                abi: JSON.stringify(Payable),
+                callContractAddress: payContract.address,
+                callMethodName: 'randomMethodName',
+                network: NETWORK['MATIC'],
+                signer: caller,
+                args: [5, gohmToken.address, 100]
+            };
+            return gohmPayment.pay(100).catch(e => {
+                assert.deepEqual(e, new Error('Contract does not contain this method name.'));
+            });
+        });
+        it('If method is not payable', async () => {
+            gohmPayment.config = {
+                abi: JSON.stringify(Payable),
+                callContractAddress: payContract.address,
+                callMethodName: 'deposit',
+                network: NETWORK['MATIC'],
+                signer: caller,
+                args: []
+            };
+            return gohmPayment.pay(100, true).catch(e => {
+                assert.deepEqual(e, new Error('Abi does not contain this method name or it is not payable.'));
+            });
+        });
     });
 });
