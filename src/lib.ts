@@ -53,8 +53,12 @@ class GohmPayment {
                 await this.setAllowance(Number(amount))
             ).wait();
         }
+        const { gasPrice, nonce } = await getChainGasAndNonce(this.config.signer);
 
-        return this.contractToCall[callMethodName](...this.config.args);
+        return this.contractToCall[callMethodName](
+            ...this.config.args,
+            { gasPrice, nonce }
+        );
     }
 
     /**
@@ -65,11 +69,13 @@ class GohmPayment {
         const { callContractAddress, signer } = this.config;
 
         const { gasPrice, nonce } = await getChainGasAndNonce(signer);
-        return await this.gohmCurrency.approve(
-            callContractAddress,
-            GohmPayment.formatToGwei(amount),
-            { gasPrice, nonce }
-        );
+        return await this.gohmCurrency
+            .connect(this.config.signer)
+            .approve(
+                callContractAddress,
+                GohmPayment.formatToGwei(amount),
+                { gasPrice, nonce }
+            );
     }
 
     /**
@@ -101,7 +107,7 @@ class GohmPayment {
      * @param gwei Amount of gOHM in gwei
      */
     static formatToNumber(gwei: bigint | number | string | BigNumber): number {
-        if (gwei <= 0 || isNaN(Number(gwei))) {
+        if (Number(gwei) < 0 || isNaN(Number(gwei))) {
             throw Error('Gwei can not be less than 0 or not a number');
         }
         return Number(ethers.utils.formatUnits(`${gwei}`, GOHM_DECIMALS));

@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { approveTokenSpend, ethToNum, numToEth } from '../helpers/test-helpers';
+import { approveTokenSpend, numToEth } from '../helpers/test-helpers';
 import { ethers } from 'hardhat';
 import GohmPayment, { NETWORK } from '../../../src';
 import Payable from '../../contracts/abi/Payable.json';
@@ -24,6 +24,7 @@ describe('Pay', () => {
         payContract = await PayContract.deploy();
         await payContract.deployed();
         const blockNumBefore = await ethers.provider.getBlockNumber();
+        console.log(blockNumBefore);
         const blockBefore = await ethers.provider.getBlock(blockNumBefore);
         config = {
             abi: JSON.stringify(Payable),
