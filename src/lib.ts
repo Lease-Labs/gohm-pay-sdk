@@ -31,12 +31,14 @@ class GohmPayment {
     /**
      * Calls the contract method set with the amount to allow in gOHM
      * @param amount The amount to allow as a string or number. (not gwei)
+     * @param args Any other arguments the method may take
      * @param callMethodName The name of the method to be called if not 'pay'
      * @param setAllowance If true then it will call to set the allowance
      * @param autoGas If can set gas and nonce automatically
      * */
     async pay(
         amount: number | string,
+        args: undefined | null | any,
         callMethodName = 'pay',
         setAllowance = true,
         autoGas = false
@@ -63,7 +65,9 @@ class GohmPayment {
             gasParams = { gasPrice, nonce };
         }
         const paymentAmount = ethers.utils.formatUnits(amount, GOHM_DECIMALS);
-
+        if (args) {
+            return this.contractToCall[callMethodName](paymentAmount, ...args, { ...gasParams });
+        }
         return this.contractToCall[callMethodName](paymentAmount, { ...gasParams });
     }
 
