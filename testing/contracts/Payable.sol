@@ -18,6 +18,10 @@ contract Payable {
         token.safeTransferFrom(msg.sender, owner, amount);
     }
 
+    function pay(uint256 amount) public payable {
+        GOHM.safeTransferFrom(msg.sender, owner, amount);
+    }
+
     function deposit(uint256 amount) public payable {
         GOHM.safeTransferFrom(msg.sender, owner, amount);
     }
