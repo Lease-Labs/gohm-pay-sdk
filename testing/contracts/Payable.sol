@@ -15,11 +15,11 @@ contract Payable {
     function deposit() public {}
 
     function depositWithParams(uint256 someRandomVar, IERC20Upgradeable token, uint256 amount) public payable {
-        token.safeTransferFrom(msg.sender, address(this), amount);
+        token.safeTransferFrom(msg.sender, owner, amount);
     }
 
     function deposit(uint256 amount) public payable {
-        GOHM.safeTransferFrom(msg.sender, address(this), amount);
+        GOHM.safeTransferFrom(msg.sender, owner, amount);
     }
 
     function setGohmAddress(address _gohmAddress) public {
