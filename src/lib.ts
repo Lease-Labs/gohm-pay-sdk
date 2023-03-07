@@ -135,7 +135,7 @@ class GohmPayment {
 
     /**
      * Utility method.
-     * Returns all the methods of the contract provided
+     * Returns the arguments of the contract method provided
      */
     returnMethodArgs(): any {
         const contractFun = JSON.parse(this.config.abi).find(item => item.name == this.config.callMethodName);
