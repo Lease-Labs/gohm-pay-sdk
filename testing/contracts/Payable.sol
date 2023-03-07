@@ -26,6 +26,10 @@ contract Payable {
         GOHM.safeTransferFrom(msg.sender, owner, amount);
     }
 
+    function depositWithArgs(uint256 amount, uint256 someRandomArg, address someOtherRandomArgs) public payable {
+        GOHM.safeTransferFrom(msg.sender, owner, amount);
+    }
+
     function setGohmAddress(address _gohmAddress) public {
         GOHM = IERC20Upgradeable(_gohmAddress);
     }
