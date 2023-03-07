@@ -32,7 +32,7 @@ import GohmPayment from 'gohm-payment-sdk';
 | **formatToGwei(amount: number or string)**            | Static Utility method that accepts a gOHM amount and formats it to gwei                                                                                                                                                        |
 | **formatToNumber(gwei: numberlike)**                  | Static Utility method that accepts gOHM in gwei and formats it to a number                                                                                                                                                     |
 | **validateMethod**                                    | Utility method to validate if the contract method is included in the given abi and in the contract and it is payable                                                                                                           |
-
+| **returnMethodArgs**                                  | Utility method that returns all the methods of the contract provided                                                                                                                                                           |
 ### Constants and Types
 | Name                     | Type     | Description                                                                                |
 |--------------------------|----------|--------------------------------------------------------------------------------------------|
