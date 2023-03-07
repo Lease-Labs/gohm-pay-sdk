@@ -6,6 +6,7 @@ import "@openzeppelin/contracts-upgradeable/token/ERC20/utils/SafeERC20Upgradeab
 contract Payable {
     using SafeERC20Upgradeable for IERC20Upgradeable;
     address payable public owner;
+    IERC20Upgradeable GOHM;
 
     constructor() payable {
         owner = payable(msg.sender);
@@ -15,5 +16,13 @@ contract Payable {
 
     function depositWithParams(uint256 someRandomVar, IERC20Upgradeable token, uint256 amount) public payable {
         token.safeTransferFrom(msg.sender, address(this), amount);
+    }
+
+    function deposit(uint256 amount) public payable {
+        GOHM.safeTransferFrom(msg.sender, address(this), amount);
+    }
+
+    function setGohmAddress(address _gohmAddress) public {
+        GOHM = IERC20Upgradeable(_gohmAddress);
     }
 }
