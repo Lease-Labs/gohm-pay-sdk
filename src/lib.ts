@@ -44,6 +44,7 @@ class GohmPayment {
         autoGas = false
     ): Promise<any> {
         const isValidMethod = this.validateMethod(callMethodName, true);
+        console.log(callMethodName);
         if (!isValidMethod) {
             throw new Error('The method set is not a valid contract method or is not payable');
         }
@@ -68,7 +69,7 @@ class GohmPayment {
         if (args) {
             return this.contractToCall[callMethodName](paymentAmount, ...args, { ...gasParams });
         }
-        return this.contractToCall[callMethodName](paymentAmount, { ...gasParams });
+        return this.contractToCall[callMethodName]();
     }
 
     /**

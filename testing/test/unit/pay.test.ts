@@ -45,7 +45,7 @@ describe('Pay', () => {
 
         describe('On Pay', () => {
             it('Completes the payment with no params', async () => {
-                await gohmPayment.pay(100, 'deposit');
+                await gohmPayment.pay(100, undefined, 'deposit');
             });
             it.skip('Completes the payment with params');
         });
@@ -54,7 +54,7 @@ describe('Pay', () => {
 
     describe('Throws', async () => {
         it('when spending is not approved and allowance is set to false', async () => {
-            return gohmPayment.pay(100, false).catch(e => {
+            return gohmPayment.pay(100, undefined, 'deposit', false).catch(e => {
                 assert.deepEqual(e, new Error('Allow the contract to spend that amount of gOHM. Call setAllowance()'));
             });
         });
@@ -76,7 +76,7 @@ describe('Pay', () => {
                 network: NETWORK['MATIC'],
                 signer: caller,
             };
-            return gohmPayment.pay(100, callMethodName, true).catch(e => {
+            return gohmPayment.pay(100, undefined, callMethodName, true).catch(e => {
                 assert.deepEqual(e, new Error('Abi does not contain this method name or it is not payable.'));
             });
         });
