@@ -11,8 +11,9 @@ describe('Pay', () => {
     let config;
     let gohmPayment;
     let callMethodName;
+    let randomSigner;
     beforeEach(async () => {
-        [caller] = await ethers.getSigners();
+        [caller, randomSigner] = await ethers.getSigners();
         // Deploying smart contracts
         const GohmToken = await ethers.getContractFactory('FakeGohm');
         gohmToken = await GohmToken.deploy(0);
@@ -49,6 +50,9 @@ describe('Pay', () => {
             });
             it('Completes the payment with params', async () => {
                 await gohmPayment.pay(100, [5], 'depositWithParams');
+            });
+            it('Completes the payment with args', async () => {
+                await gohmPayment.pay(100, [5, randomSigner.address], 'depositWithArgs');
             });
         });
 
