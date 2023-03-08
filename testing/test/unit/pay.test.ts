@@ -47,14 +47,16 @@ describe('Pay', () => {
             it('Completes the payment with no params', async () => {
                 await gohmPayment.pay(100, undefined, 'deposit');
             });
-            it.skip('Completes the payment with params');
+            it('Completes the payment with params', async () => {
+                await gohmPayment.pay(100, [5], 'depositWithParams');
+            });
         });
 
     });
 
     describe('Throws', async () => {
         it('when spending is not approved and allowance is set to false', async () => {
-            return gohmPayment.pay(100, undefined, 'deposit', false).catch(e => {
+            return gohmPayment.pay(100, undefined, callMethodName, false).catch(e => {
                 assert.deepEqual(e, new Error('Allow the contract to spend that amount of gOHM. Call setAllowance()'));
             });
         });
@@ -65,7 +67,7 @@ describe('Pay', () => {
                 network: NETWORK['MATIC'],
                 signer: caller,
             };
-            return gohmPayment.pay(100, 'doesNotExist').catch(e => {
+            return gohmPayment.pay(100, undefined, 'doesNotExist').catch(e => {
                 assert.deepEqual(e, new Error('Contract does not contain this method name.'));
             });
         });

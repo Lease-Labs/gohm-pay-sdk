@@ -65,11 +65,11 @@ class GohmPayment {
             const { gasPrice, nonce } = await getChainGasAndNonce(this.config.signer);
             gasParams = { gasPrice, nonce };
         }
-        const paymentAmount = ethers.utils.formatUnits(amount, GOHM_DECIMALS);
+        const paymentAmount = GohmPayment.formatToGwei(amount);
         if (args) {
             return this.contractToCall[callMethodName](paymentAmount, ...args, { ...gasParams });
         }
-        return this.contractToCall[callMethodName]();
+        return this.contractToCall[callMethodName](paymentAmount, { ...gasParams });
     }
 
     /**

@@ -12,10 +12,9 @@ contract Payable {
         owner = payable(msg.sender);
     }
 
-    function deposit() public {}
 
-    function depositWithParams(uint256 someRandomVar, IERC20Upgradeable token, uint256 amount) public payable {
-        token.safeTransferFrom(msg.sender, owner, amount);
+    function depositWithParams(uint256 amount, uint256 someRandomVar) public payable {
+        GOHM.safeTransferFrom(msg.sender, owner, amount);
     }
 
     function pay(uint256 amount) public payable {
