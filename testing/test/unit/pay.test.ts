@@ -40,8 +40,8 @@ describe('Pay', () => {
         });
         it('Checking if user has enough allowance to spend', async () => {
             await approveTokenSpend(gohmToken, caller, payContract.address, numToEth(101));
-            expect(await gohmPayment.hasAllowanceToSpend(99)).to.be.true;
-            expect(await gohmPayment.hasAllowanceToSpend(101)).to.be.false;
+            expect(await gohmPayment.hasAllowanceToSpend(101)).to.be.true;
+            expect(await gohmPayment.hasAllowanceToSpend(102)).to.be.false;
         });
 
         describe('On Pay', () => {

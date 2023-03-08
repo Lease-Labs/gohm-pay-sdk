@@ -117,7 +117,7 @@ class GohmPayment {
         const signerAddress = await signer.getAddress();
         const allowance: BigNumber = await this.gohmCurrency.allowance(signerAddress, callContractAddress);
         const formattedAllowance = GohmPayment.formatToNumber(allowance);
-        return formattedAllowance > amount;
+        return formattedAllowance >= amount;
     }
 
     /**
