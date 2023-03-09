@@ -5,7 +5,13 @@
       "type": "constructor"
     },
     {
-      "inputs": [],
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
       "name": "deposit",
       "outputs": [],
       "stateMutability": "payable",
@@ -15,17 +21,35 @@
       "inputs": [
         {
           "internalType": "uint256",
-          "name": "someRandomVar",
+          "name": "amount",
           "type": "uint256"
         },
         {
-          "internalType": "contract IERC20Upgradeable",
-          "name": "token",
-          "type": "address"
+          "internalType": "uint256",
+          "name": "someRandomArg",
+          "type": "uint256"
         },
+        {
+          "internalType": "address",
+          "name": "someOtherRandomArgs",
+          "type": "address"
+        }
+      ],
+      "name": "depositWithArgs",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
         {
           "internalType": "uint256",
           "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "someRandomVar",
           "type": "uint256"
         }
       ],
@@ -45,6 +69,32 @@
         }
       ],
       "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "pay",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_gohmAddress",
+          "type": "address"
+        }
+      ],
+      "name": "setGohmAddress",
+      "outputs": [],
+      "stateMutability": "nonpayable",
       "type": "function"
     }
   ]

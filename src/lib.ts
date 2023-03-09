@@ -6,10 +6,8 @@ import { getChainGasAndNonce } from './utils';
 interface Configuration {
     abi: string;
     callContractAddress: string;
-    callMethodName: string; // TODO validate this is a payable method. Validate this exists on the abi
     network: AVAILABLE_NETWORKS;
-    signer: ethers.Signer; // TODO I think we will just need the signer here not the provider
-    args: any;
+    signer: ethers.Signer;
 }
 
 const GOHM_DECIMALS = 18;
@@ -20,7 +18,7 @@ class GohmPayment {
     gohmCurrency: ethers.Contract;
 
     constructor(config: Configuration) {
-        const { callContractAddress, abi, signer, network, args } = config;
+        const { callContractAddress, abi, signer, network } = config;
         this.config = config;
         this.contractToCall = new ethers.Contract(callContractAddress, abi, signer);
         this.gohmCurrency = new ethers.Contract(
@@ -33,11 +31,20 @@ class GohmPayment {
     /**
      * Calls the contract method set with the amount to allow in gOHM
      * @param amount The amount to allow as a string or number. (not gwei)
+     * @param args Any other arguments the method may take
+     * @param callMethodName The name of the method to be called if not 'pay'
      * @param setAllowance If true then it will call to set the allowance
-     */
-    async pay(amount: number | string, setAllowance = true): Promise<any> {
-        const { callMethodName } = this.config;
-        const isValidMethod = this.validateMethod();
+     * @param autoGas If can set gas and nonce automatically
+     * */
+    async pay(
+        amount: number | string,
+        args: undefined | null | any,
+        callMethodName = 'pay',
+        setAllowance = true,
+        autoGas = false
+    ): Promise<any> {
+        const isValidMethod = this.validateMethod(callMethodName, true);
+        console.log(callMethodName);
         if (!isValidMethod) {
             throw new Error('The method set is not a valid contract method or is not payable');
         }
@@ -53,12 +60,35 @@ class GohmPayment {
                 await this.setAllowance(Number(amount))
             ).wait();
         }
-        const { gasPrice, nonce } = await getChainGasAndNonce(this.config.signer);
+        let gasParams = {};
+        if (autoGas) {
+            const { gasPrice, nonce } = await getChainGasAndNonce(this.config.signer);
+            gasParams = { gasPrice, nonce };
+        }
+        const paymentAmount = GohmPayment.formatToGwei(amount);
+        if (args) {
+            return this.contractToCall[callMethodName](paymentAmount, ...args, { ...gasParams });
+        }
+        return this.contractToCall[callMethodName](paymentAmount, { ...gasParams });
+    }
 
-        return this.contractToCall[callMethodName](
-            ...this.config.args,
-            { gasPrice, nonce }
-        );
+    /**
+     * Calls the contract method
+     * @param callMethodName The method to call
+     * @param callParams Your parameters
+     * @param autoGas If True set gas and nonce
+     * */
+    async methodCall(callMethodName, callParams: any, autoGas = false): Promise<any> {
+        const isValidMethod = this.validateMethod(callMethodName, false);
+        if (!isValidMethod) {
+            throw new Error('The method set is not a valid contract method or is not payable');
+        }
+        let gasParams = {};
+        if (autoGas) {
+            const { gasPrice, nonce } = await getChainGasAndNonce(this.config.signer);
+            gasParams = { gasPrice, nonce };
+        }
+        return this.contractToCall[callMethodName](...callParams, { ...gasParams });
     }
 
     /**
@@ -87,7 +117,7 @@ class GohmPayment {
         const signerAddress = await signer.getAddress();
         const allowance: BigNumber = await this.gohmCurrency.allowance(signerAddress, callContractAddress);
         const formattedAllowance = GohmPayment.formatToNumber(allowance);
-        return formattedAllowance > amount;
+        return formattedAllowance >= amount;
     }
 
     /**
@@ -116,35 +146,25 @@ class GohmPayment {
     /**
      * Utility method.
      * Checks the method requested is payable and exists within the contract
+     * @param methodName The name of the method to validate
+     * @param checkPayable Validate if the method is payable
      */
-    validateMethod(): boolean {
+    validateMethod(methodName: string, checkPayable = true): boolean {
         const abiPayableFuncs = JSON.parse(this.config.abi)
             .filter(item => item.stateMutability == 'payable' && item.type == 'function');
         const contractContainsMethodName = Object
             .keys(this.contractToCall.functions)
-            .find(key => key === this.config.callMethodName);
+            .find(key => key === methodName);
         if (!contractContainsMethodName) {
             throw new Error('Contract does not contain this method name.');
         }
-        const funcNames = abiPayableFuncs.map(item => item.name);
-        if (!funcNames.includes(this.config.callMethodName)) {
-            throw new Error('Abi does not contain this method name or it is not payable.');
+        if (checkPayable) {
+            const funcNames = abiPayableFuncs.map(item => item.name);
+            if (!funcNames.includes(methodName)) {
+                throw new Error('Abi does not contain this method name or it is not payable.');
+            }
         }
         return true;
-    }
-
-    /**
-     * Utility method.
-     * Returns the arguments of the contract method provided
-     */
-    returnMethodArgs(): any {
-        const contractFun = JSON.parse(this.config.abi).find(item => item.name == this.config.callMethodName);
-        return contractFun.inputs.map(inp => {
-            return {
-                name: inp.name,
-                type: inp.type
-            };
-        });
     }
 }
 
