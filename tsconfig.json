@@ -12,7 +12,7 @@
     "resolveJsonModule": true,
     "strict": true
   },
-  "include": ["./src", "./testing", "./typechain-types"],
+  "include": ["./src"],
   "files": ["./hardhat.config.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "testing"]
 }
