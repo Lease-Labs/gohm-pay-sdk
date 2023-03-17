@@ -1,6 +1,6 @@
 import { AVAILABLE_NETWORKS, GOHM_NETWORK_ADDRESS } from './constants';
 import { BigNumber, ethers } from 'ethers';
-import ERC20Abi from './abi/ERC20TokenAbi.json';
+import * as ERC20Abi from './abi/ERC20TokenAbi.json';
 import { getChainGasAndNonce } from './utils';
 
 interface Configuration {
