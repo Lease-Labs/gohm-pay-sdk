@@ -17,7 +17,6 @@
   "scripts": {
     "build": "tsc --outDir dist src/index.ts",
     "test": "npx hardhat test",
-    "test:j": "node_modules/.bin/jest -i",
     "build:contracts": "npx hardhat compile"
   },
   "dependencies": {
@@ -30,7 +29,6 @@
     "eslint": "^8.32.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "jest": "^29.4.1",
     "nodemon": "^2.0.20",
     "ts-jest": "^29.0.5",
     "ts-node": "^10.9.1",
