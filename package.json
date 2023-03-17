@@ -1,12 +1,11 @@
 {
   "name": "gohm-payment-sdk",
   "description": "A payment SDK for gOHM in any EVM compatible network",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "email": "petros@tripstrade.com",
   "main": "src/index.ts",
   "author": "LeaseLeabs",
   "license": "MIT",
-  "private": "false",
   "repository": {
     "type": "git",
     "url": "https://github.com/Lease-Labs/gohm-sdk"
